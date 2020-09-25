@@ -31,7 +31,7 @@ public class MemoryBookService implements BookService {
     @Override
     public void addBook(Book book) {
         book.setId(nextId++);
-        this.books.add(book);
+        books.add(book);
     }
 
     @Override
@@ -43,6 +43,7 @@ public class MemoryBookService implements BookService {
     public void updateBookById(Long id, Book newBook) {
         getBookById(id).ifPresent(book -> {
             int index = books.indexOf(book);
+            newBook.setId(id);
             books.set(index, newBook);
         });
     }

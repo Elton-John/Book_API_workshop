@@ -22,19 +22,8 @@ public class BookController {
         return bookService.getBooks();
     }
 
-//    @PostMapping
-//    public void addBook(@RequestBody Book book) {              //to nie działa
-//        bookService.addBook(book);
-//    }
-
-
     @PostMapping
-    public void addBook(@RequestParam String isbn,
-                        @RequestParam String title,
-                        @RequestParam String author,
-                        @RequestParam String publisher,
-                        @RequestParam String type) {
-        Book book = new Book(0L, isbn, title, author, publisher, type);
+    public void addBook(@RequestBody Book book) {              //to nie działa
         bookService.addBook(book);
     }
 
@@ -44,13 +33,7 @@ public class BookController {
     }
 
     @PutMapping("/{id}")
-    public void updateBookById(@PathVariable long id,
-                               @RequestParam String isbn,
-                               @RequestParam String title,
-                               @RequestParam String author,
-                               @RequestParam String publisher,
-                               @RequestParam String type) {
-        Book newBook = new Book(id, isbn, title, author, publisher, type);
+    public void updateBookById(@PathVariable long id, @RequestBody Book newBook) {
         bookService.updateBookById(id, newBook);
     }
 
