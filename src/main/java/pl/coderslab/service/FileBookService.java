@@ -18,7 +18,9 @@ public class FileBookService implements BookService {
         try {
             FileInputStream fis = new FileInputStream("books.bin");
             ObjectInputStream ois = new ObjectInputStream(fis);
-            nextId = ois.readInt();
+            int lastIndex = ois.readInt();
+            Long lastId = getBooks().get(lastIndex).getId();
+            nextId = lastId+1;
         } catch (IOException e) {
             e.printStackTrace();
         }
