@@ -1,6 +1,8 @@
 package pl.coderslab.controller;
 
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.web.bind.annotation.*;
 import pl.coderslab.entity.Book;
 import pl.coderslab.interfacies.BookService;
@@ -13,7 +15,7 @@ import java.util.NoSuchElementException;
 public class BookController {
     private BookService bookService;
 
-    public BookController(BookService bookService) {
+    public BookController(@Qualifier("fileBookService") BookService bookService) {
         this.bookService = bookService;
     }
 
@@ -23,7 +25,7 @@ public class BookController {
     }
 
     @PostMapping
-    public void addBook(@RequestBody Book book) {              //to nie działa
+    public void addBook(@RequestBody Book book) {
         bookService.addBook(book);
     }
 
