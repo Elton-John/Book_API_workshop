@@ -18,9 +18,8 @@ public class FileBookService implements BookService {
         try {
             FileInputStream fis = new FileInputStream("books.bin");
             ObjectInputStream ois = new ObjectInputStream(fis);
-            int lastIndex = ois.readInt();
-            Long lastId = getBooks().get(lastIndex).getId();
-            nextId = lastId+1;
+            int lastIndex = ois.readInt() - 1;
+            nextId = getBooks().get(lastIndex).getId() + 1;
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -50,27 +49,27 @@ public class FileBookService implements BookService {
         book.setId(nextId++);
         books.add(book);
 
-            try {
-                FileOutputStream fos = new FileOutputStream("books.bin");
-                ObjectOutputStream oos = new ObjectOutputStream(fos);
-                    oos.writeInt(books.size());
-                    books.forEach(book1 -> {
-                        try {
-                            oos.writeObject(book1);
-                        } catch (IOException e) {
-                            e.printStackTrace();
-                        }
-                    });
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
+        try {
+            FileOutputStream fos = new FileOutputStream("books.bin");
+            ObjectOutputStream oos = new ObjectOutputStream(fos);
+            oos.writeInt(books.size());
+            books.forEach(book1 -> {
+                try {
+                    oos.writeObject(book1);
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            });
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
 
 
     }
 
     @Override
     public Optional<Book> getBookById(Long id) {
-        return Optional.empty();
+        return getBooks().stream().filter(book -> book.getId().equals(id)).findFirst();
     }
 
     @Override
