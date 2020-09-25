@@ -32,11 +32,12 @@ public class FileBookService implements BookService {
         try {
             FileInputStream fis = new FileInputStream("books.bin");
             ObjectInputStream ois = new ObjectInputStream(fis);
-            int bookCount = ois.readInt();
-            for (int i = 0; i < bookCount; i++) {
-                Book book = (Book) ois.readObject();
-                books.add(book);
-            }
+           books =(List<Book>) ois.readObject();
+//            int bookCount = ois.readInt();
+//            for (int i = 0; i < bookCount; i++) {
+//                Book book = (Book) ois.readObject();
+//                books.add(book);
+//            }
         } catch (IOException | ClassNotFoundException e) {
             e.printStackTrace();
         }
@@ -48,24 +49,9 @@ public class FileBookService implements BookService {
         List<Book> books = getBooks();
         book.setId(nextId++);
         books.add(book);
-
-        try {
-            FileOutputStream fos = new FileOutputStream("books.bin");
-            ObjectOutputStream oos = new ObjectOutputStream(fos);
-            oos.writeInt(books.size());
-            books.forEach(book1 -> {
-                try {
-                    oos.writeObject(book1);
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-            });
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-
-
+        writeToFile(books);
     }
+
 
     @Override
     public Optional<Book> getBookById(Long id) {
@@ -73,12 +59,56 @@ public class FileBookService implements BookService {
     }
 
     @Override
-    public void updateBookById(Long id, Book book) {
-
+    public void updateBookById(Long id, Book newBook) {
+        getBookById(id).ifPresent(book -> {
+            List<Book> books = getBooks();
+            int index = books.indexOf(book);
+            newBook.setId(id);
+            books.set(index, newBook);
+            reWrite(books);
+        });
     }
 
     @Override
     public void deleteBookById(Long id) {
+        getBookById(id).ifPresent(book -> {
+            List<Book> books = getBooks();
+            books.remove(book);
+            reWrite(books);
+        });
 
     }
+
+    private void writeToFile(List<Book> books) {
+        try {
+            FileOutputStream fos = new FileOutputStream("books.bin");
+            ObjectOutputStream oos = new ObjectOutputStream(fos);
+            oos.writeObject(books);
+//            oos.writeInt(books.size());
+//            books.forEach(book1 -> {
+//                try {
+//                    oos.writeObject(book1);
+//                } catch (IOException e) {
+//                    e.printStackTrace();
+//                }
+//            });
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void reWrite(List<Book> books) {
+
+        try {
+            FileOutputStream fos = new FileOutputStream("books.bin");
+            ObjectOutputStream oos = new ObjectOutputStream(fos);
+            oos.reset();
+            writeToFile(books);
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
 }
