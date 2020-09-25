@@ -55,6 +55,6 @@ public class MemoryBookService implements BookService {
 
     @Override
     public void deleteBookById(Long id) {
-
+        getBookById(id).ifPresent(book -> books.remove(book));
     }
 }
