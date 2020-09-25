@@ -1,7 +1,6 @@
 package pl.coderslab.controller;
 
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import pl.coderslab.entity.Book;
 import pl.coderslab.interfacies.BookService;
@@ -56,7 +55,7 @@ public class BookController {
     }
 
     @DeleteMapping("/{id}")
-    public void deleteBookById(@PathVariable long id){
+    public void deleteBookById(@PathVariable long id) {
         bookService.deleteBookById(id);
     }
 }

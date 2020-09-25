@@ -34,7 +34,6 @@ public class MemoryBookService implements BookService {
         this.books.add(book);
     }
 
-
     @Override
     public Optional<Book> getBookById(Long id) {
         return books.stream().filter(book -> book.getId().equals(id)).findFirst();
@@ -44,12 +43,7 @@ public class MemoryBookService implements BookService {
     public void updateBookById(Long id, Book newBook) {
         getBookById(id).ifPresent(book -> {
             int index = books.indexOf(book);
-            book.setIsbn(newBook.getIsbn());
-            book.setTitle(newBook.getTitle());
-            book.setAuthor(newBook.getAuthor());
-            book.setPublisher(newBook.getPublisher());
-            book.setType(newBook.getType());
-            books.set(index, book);
+            books.set(index, newBook);
         });
     }
 
