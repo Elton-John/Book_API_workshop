@@ -6,6 +6,7 @@ import pl.coderslab.interfacies.BookService;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @Component
 public class MemoryBookService implements BookService {
@@ -34,10 +35,9 @@ public class MemoryBookService implements BookService {
     }
 
 
-
     @Override
-    public Book getBookById(Long id) {
-        return null;
+    public Optional<Book> getBookById(Long id) {
+        return books.stream().filter(book -> book.getId().equals(id)).findFirst();
     }
 
     @Override

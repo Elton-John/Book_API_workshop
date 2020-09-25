@@ -7,6 +7,7 @@ import pl.coderslab.entity.Book;
 import pl.coderslab.interfacies.BookService;
 
 import java.util.List;
+import java.util.NoSuchElementException;
 
 @RestController
 @RequestMapping("/books")
@@ -36,5 +37,10 @@ public class BookController {
                         @RequestParam String type) {
         Book book = new Book(0L, isbn, title, author, publisher, type);
         bookService.addBook(book);
+    }
+
+    @GetMapping("/{id}")
+    public Book getBookById(@PathVariable Long id){
+        return bookService.getBookById(id).orElseThrow(() -> new NoSuchElementException("No such element"));
     }
 }
