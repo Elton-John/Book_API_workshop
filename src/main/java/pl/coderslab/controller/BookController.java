@@ -24,7 +24,7 @@ public class BookController {
     }
 
 //    @PostMapping
-//    public void addBook(@RequestBody Book book){              //to nie działa
+//    public void addBook(@RequestBody Book book) {              //to nie działa
 //        bookService.addBook(book);
 //    }
 
@@ -40,7 +40,18 @@ public class BookController {
     }
 
     @GetMapping("/{id}")
-    public Book getBookById(@PathVariable Long id){
+    public Book getBookById(@PathVariable Long id) {
         return bookService.getBookById(id).orElseThrow(() -> new NoSuchElementException("No such element"));
+    }
+
+    @PutMapping("/{id}")
+    public void updateBookById(@PathVariable long id,
+                               @RequestParam String isbn,
+                               @RequestParam String title,
+                               @RequestParam String author,
+                               @RequestParam String publisher,
+                               @RequestParam String type) {
+        Book newBook = new Book(id, isbn, title, author, publisher, type);
+        bookService.updateBookById(id, newBook);
     }
 }

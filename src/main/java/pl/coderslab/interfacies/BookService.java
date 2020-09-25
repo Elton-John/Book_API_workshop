@@ -12,7 +12,7 @@ public interface BookService {
 
     Optional<Book> getBookById(Long id);
 
-    void updateBookById(Long id);
+    void updateBookById(Long id, Book book);
 
     void deleteBookById(Long id);
 }
