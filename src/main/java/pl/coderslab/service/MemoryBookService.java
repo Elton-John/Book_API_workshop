@@ -29,8 +29,11 @@ public class MemoryBookService implements BookService {
 
     @Override
     public void addBook(Book book) {
-
+        book.setId(nextId++);
+        this.books.add(book);
     }
+
+
 
     @Override
     public Book getBookById(Long id) {
