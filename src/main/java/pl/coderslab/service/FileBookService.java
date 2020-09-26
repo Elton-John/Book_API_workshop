@@ -6,38 +6,32 @@ import pl.coderslab.interfacies.BookService;
 
 import java.io.*;
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Component
 public class FileBookService implements BookService {
+    private static List<Book> books;
     private static long nextId;
+    private static List<Long> idNumbers;
 
     public FileBookService() {
-
-        try {
-            FileInputStream fis = new FileInputStream("books.bin");
-            ObjectInputStream ois = new ObjectInputStream(fis);
-            int lastIndex = ois.readInt() - 1;
-            nextId = getBooks().get(lastIndex).getId() + 1;
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-
+        idNumbers = new ArrayList<>();
+        getBooks().forEach(book -> idNumbers.add(book.getId()));
+        Long maxId = idNumbers.stream().max(Long::compareTo).orElseGet(() -> 0L);
+        nextId = maxId + 1;
     }
 
     @Override
     public List<Book> getBooks() {
-        List<Book> books = new ArrayList<>();
+        books = new ArrayList<>();
         try {
             FileInputStream fis = new FileInputStream("books.bin");
             ObjectInputStream ois = new ObjectInputStream(fis);
-           books =(List<Book>) ois.readObject();
-//            int bookCount = ois.readInt();
-//            for (int i = 0; i < bookCount; i++) {
-//                Book book = (Book) ois.readObject();
-//                books.add(book);
-//            }
+            books = (List<Book>) ois.readObject();
+            books.sort(Comparator.comparing(Book::getId));
         } catch (IOException | ClassNotFoundException e) {
             e.printStackTrace();
         }
@@ -52,7 +46,6 @@ public class FileBookService implements BookService {
         writeToFile(books);
     }
 
-
     @Override
     public Optional<Book> getBookById(Long id) {
         return getBooks().stream().filter(book -> book.getId().equals(id)).findFirst();
@@ -61,20 +54,18 @@ public class FileBookService implements BookService {
     @Override
     public void updateBookById(Long id, Book newBook) {
         getBookById(id).ifPresent(book -> {
-            List<Book> books = getBooks();
-            int index = books.indexOf(book);
+            books.remove(book);
             newBook.setId(id);
-            books.set(index, newBook);
-            reWrite(books);
+            books.add(newBook);
+            writeToFile(books);
         });
     }
 
     @Override
     public void deleteBookById(Long id) {
         getBookById(id).ifPresent(book -> {
-            List<Book> books = getBooks();
             books.remove(book);
-            reWrite(books);
+            writeToFile(books);
         });
 
     }
@@ -84,28 +75,7 @@ public class FileBookService implements BookService {
             FileOutputStream fos = new FileOutputStream("books.bin");
             ObjectOutputStream oos = new ObjectOutputStream(fos);
             oos.writeObject(books);
-//            oos.writeInt(books.size());
-//            books.forEach(book1 -> {
-//                try {
-//                    oos.writeObject(book1);
-//                } catch (IOException e) {
-//                    e.printStackTrace();
-//                }
-//            });
-
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
-
-    public void reWrite(List<Book> books) {
-
-        try {
-            FileOutputStream fos = new FileOutputStream("books.bin");
-            ObjectOutputStream oos = new ObjectOutputStream(fos);
-            oos.reset();
-            writeToFile(books);
-
+            oos.close();
         } catch (IOException e) {
             e.printStackTrace();
         }
