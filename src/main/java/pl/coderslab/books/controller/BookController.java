@@ -32,9 +32,9 @@ public class BookController {
         return bookService.getBookById(id).orElseThrow(() -> new NoSuchElementException("No such element"));
     }
 
-    @PutMapping("/{id}")
-    public void updateBookById(@PathVariable long id, @RequestBody Book newBook) {
-        bookService.updateBookById(id, newBook);
+    @PutMapping
+    public void updateBookById( @RequestBody Book newBook) {
+        bookService.updateBookById(newBook);
     }
 
     @DeleteMapping("/{id}")

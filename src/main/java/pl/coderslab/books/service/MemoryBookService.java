@@ -40,10 +40,9 @@ public class MemoryBookService implements BookService {
     }
 
     @Override
-    public void updateBookById(Long id, Book newBook) {
-        getBookById(id).ifPresent(book -> {
+    public void updateBookById(Book newBook) {
+        getBookById(newBook.getId()).ifPresent(book -> {
             int index = books.indexOf(book);
-            newBook.setId(id);
             books.set(index, newBook);
         });
     }
