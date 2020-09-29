@@ -1,4 +1,4 @@
-package pl.coderslab.entity;
+package pl.coderslab.books.entity;
 
 public class Book {
     private Long id;

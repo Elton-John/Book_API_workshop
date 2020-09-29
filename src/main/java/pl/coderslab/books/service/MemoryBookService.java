@@ -1,8 +1,8 @@
-package pl.coderslab.service;
+package pl.coderslab.books.service;
 
 import org.springframework.stereotype.Component;
-import pl.coderslab.entity.Book;
-import pl.coderslab.interfacies.BookService;
+import pl.coderslab.books.entity.Book;
+import pl.coderslab.books.interfacies.BookService;
 
 import java.util.ArrayList;
 import java.util.List;

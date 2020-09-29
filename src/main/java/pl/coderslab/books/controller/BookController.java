@@ -1,9 +1,9 @@
-package pl.coderslab.controller;
+package pl.coderslab.books.controller;
 
 
 import org.springframework.web.bind.annotation.*;
-import pl.coderslab.entity.Book;
-import pl.coderslab.interfacies.BookService;
+import pl.coderslab.books.entity.Book;
+import pl.coderslab.books.interfacies.BookService;
 
 import java.util.List;
 import java.util.NoSuchElementException;
