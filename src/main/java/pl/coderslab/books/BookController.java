@@ -1,14 +1,11 @@
-package pl.coderslab.books.controller;
+package pl.coderslab.books;
 
 
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
-import pl.coderslab.books.entity.Book;
-import pl.coderslab.books.interfacies.BookService;
 
 import java.util.List;
-import java.util.NoSuchElementException;
 
 @RestController
 @RequestMapping("/books")

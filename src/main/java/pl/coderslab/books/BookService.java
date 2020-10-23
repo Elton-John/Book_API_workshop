@@ -1,6 +1,6 @@
-package pl.coderslab.books.interfacies;
+package pl.coderslab.books;
 
-import pl.coderslab.books.entity.Book;
+import pl.coderslab.books.Book;
 
 import java.util.List;
 import java.util.Optional;
