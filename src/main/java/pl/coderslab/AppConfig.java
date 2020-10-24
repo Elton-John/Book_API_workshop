@@ -11,6 +11,7 @@ import org.springframework.validation.Validator;
 import org.springframework.validation.beanvalidation.LocalValidatorFactoryBean;
 import org.springframework.web.servlet.LocaleContextResolver;
 import org.springframework.web.servlet.ViewResolver;
+import org.springframework.web.servlet.config.annotation.DefaultServletHandlerConfigurer;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 import org.springframework.web.servlet.i18n.SessionLocaleResolver;
@@ -51,11 +52,12 @@ public class AppConfig implements WebMvcConfigurer {
         return viewResolver;
     }
 
-
-    @Bean
-    public Validator validator() {
-        return new LocalValidatorFactoryBean();
+    @Override   // dodajemy również beana odpowiedzialnego za prawidłową interpretację plików css i js
+    public void configureDefaultServletHandling(
+            DefaultServletHandlerConfigurer configurer) {
+        configurer.enable();
     }
+
 
     @Bean(name = "localeResolver")
     public LocaleContextResolver getLocaleContextResolver() {
@@ -64,4 +66,8 @@ public class AppConfig implements WebMvcConfigurer {
         return localeResolver;
     }
 
+    @Bean
+    public Validator validator() {
+        return new LocalValidatorFactoryBean();
+    }
 }
