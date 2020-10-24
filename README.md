@@ -8,10 +8,10 @@ MIT license (It lets people do almost anything they want with the project, like 
 # This is how it works
  
  
-* :star2: GET **/books/** - get all books;
-* :star2: POST **/books/** - add new book (jason);
+* :star2: GET **/books** - get all books;
+* :star2: POST **/books** - add new book (jason);
 * :star2: GET **/books/{id}** - get one book by id;
-* :star2: PUT **/books/{id}** - update one book by id;
+* :star2: PUT **/books** - update one book by id;
 * :star2: DELETE **/books/{id}** - delete one book by id;
 
  Very satisfying for me at the beginning of my Java learning :blush:
