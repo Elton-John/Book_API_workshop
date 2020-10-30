@@ -20,11 +20,11 @@ public class ManageBookController {
 
     private final BookService bookService;
 
-    @GetMapping("/all")
-    public String showPosts(Model model) {
+    @GetMapping
+    public String index(Model model) {
         List<Book> books = bookService.getBooks();
         model.addAttribute("books", books);
-        return "/books/all";
+        return "books/index";
     }
 
     @GetMapping("/add")
