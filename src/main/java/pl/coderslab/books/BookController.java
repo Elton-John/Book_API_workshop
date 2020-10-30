@@ -5,6 +5,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 
+import javax.persistence.EntityNotFoundException;
 import java.util.List;
 
 @RestController
@@ -28,11 +29,7 @@ public class BookController {
 
     @GetMapping("/{id}")
     public Book getBookById(@PathVariable Long id) {
-        return bookService.getBookById(id).orElseThrow(() -> {
-                    throw new ResponseStatusException(
-                            HttpStatus.NOT_FOUND, "entity not found");
-                }
-        );
+        return bookService.getBookById(id).orElseThrow(EntityNotFoundException::new);
     }
 
     @PutMapping
