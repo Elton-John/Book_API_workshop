@@ -29,7 +29,10 @@ public class BookController {
 
     @GetMapping("/{id}")
     public Book getBookById(@PathVariable Long id) {
-        return bookService.getBookById(id).orElseThrow(EntityNotFoundException::new);
+        return bookService.getBookById(id).orElseThrow(() -> {
+            throw new ResponseStatusException(
+                    HttpStatus.NOT_FOUND, "Entity not found");
+        });
     }
 
     @PutMapping
