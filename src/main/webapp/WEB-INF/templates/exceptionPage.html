@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html lang="en"  xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Error</title>
+</head>
+<body>
+
+<h3>Nie znaleziono strony </h3>
+
+<p th:text="${url}"></p>
+<p th:text="${errorMessage}"></p>
+<p th:text="${exception}"></p>
+
+<a href="/admin/books">Wróć do strony głównej</a>
+</body>
+</html>

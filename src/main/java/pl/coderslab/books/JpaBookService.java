@@ -33,6 +33,7 @@ public class JpaBookService implements BookService {
     @Override
     public void updateBookById(Book book) {
         bookRepository.save(book);
+
     }
 
     @Override

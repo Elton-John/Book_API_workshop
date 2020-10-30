@@ -9,7 +9,8 @@
 <div th:each="book : ${books}">
     <a th:href="@{/admin/books/{id}(id=${book.getId()})}" th:text="${book.title}">user</a>
 </div>
-
-
+<h1>
+<a th:href="@{/admin/books/new}">Dodaj książkę</a>
+</h1>
 </body>
 </html>
